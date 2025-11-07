@@ -10,8 +10,8 @@ const db = mongoose.connection
 db.on('error', (error) => console.error('FAIL:' + error))
 db.once('open', () => {console.log('//// dis works yippie')})
 
-const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:27017/todos')
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 
 app.get('/', async (req, res) => {
@@ -26,11 +26,10 @@ app.get('/', async (req, res) => {
 app.use('/todos', require('./routes/todos.routes'))
 
 app.use((req,res)=>{
-    return res.status(404).json(
-        {
-            message: "this appears to not exist"
-        }
-    )
+    res.status(404).json({
+        message: "route not found, try again bugger",
+        "endpoint/path not found": req.originalUrl
+    })
 })
 
 app.listen(port, () => {

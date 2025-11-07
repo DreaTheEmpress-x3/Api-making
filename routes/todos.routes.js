@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
+const Todo =  require('../models/todos.model')
+
 router.get('/', async (req, res)=>{
     console.log("GET: hent alle qoutes")
     res.status(200).json({
