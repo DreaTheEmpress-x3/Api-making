@@ -1,15 +1,20 @@
 const express = require('express');
+require('dotenv').config();
 const app = express();
-const port = 5190;
+const port = process.env.PORT
 
 //the url for requests http://localhost:5190
 
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:27017/quotes_db')
+mongoose.connect('mongodb://localhost:27017/todos_db')
 const db = mongoose.connection
 db.on('error', (error) => console.error('FAIL:' + error))
 db.once('open', () => {console.log('//// dis works yippie')})
 
+const cors = require('cors')
+app.use(cors({origin: true}))
+
+app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
