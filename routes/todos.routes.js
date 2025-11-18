@@ -17,10 +17,6 @@ router.get("/", async (req, res) => {
             message: "der skete en fejl" + error.message,
         });
     }
-
-    res.status(200).json({
-        message: "your quite the bugger",
-    });
 });
 
 router.get("/:id", async (req, res) => {
@@ -33,15 +29,13 @@ router.get("/:id", async (req, res) => {
             message: "der skete en fejl" + error.message,
         });
     }
-    res.status(200).json({
-        message: "your quite the bugger" + req.params.id,
-    });
 });
 
 router.post("/admin", async (req, res) => {
-    console.log("POST: create qoutes");
+    console.log("POST: create qoutes", req.body);
     try {
         let todo = new Todo(req.body);
+        // todo.authorImage=req.body.filename
         await todo.save();
         res.status(201).json({
             message: "todo Post worked",
@@ -54,9 +48,6 @@ router.post("/admin", async (req, res) => {
             created: null,
         });
     }
-    res.status(201).json({
-        message: "your quite the POST bugger",
-    });
 });
 
 router.put("/admin/:id", async (req, res) => {
